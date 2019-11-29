@@ -1,31 +1,52 @@
 version: "3.3"
 services:
   pg_master:
-    build: ./master
+    image: lucasfs/pg-pi_master
     volumes:
       - pg_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=hamed
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=hamed
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=testdb
       - PG_REP_USER=rep
-      - PG_REP_PASSWORD=123456
+      - PG_REP_PASSWORD=postgres
+    volumes:
+      - pg-master-vol:/pgdata
+    ports:
+      - "5432"
     networks:
-      default:
-        aliases:
-          - pg_cluster
+      - pg-net
+    deploy:
+      placement:
+        constraints:
+        - node.labels.type == primary
+  
   pg_slave:
-    build: ./slave
+    image: lucasfs/pg-pi_slave
     environment:
-      - POSTGRES_USER=hamed
-      - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=hamed
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=testdb
       - PG_REP_USER=rep
-      - PG_REP_PASSWORD=123456
+      - PG_REP_PASSWORD=postgres
       - PG_MASTER_HOST=pg_master
+    volumes:
+      - pg-slave-vol:/pgdata
+    ports:
+      - "5432"
     networks:
-      default:
-        aliases:
-          - pg_cluster
+      - pg-net
+    
+    deploy:
+      placement:
+        constraints:
+        - node.labels.type == worker
+
+networks:
+  pg-net:
+    external:
+      name: pgnet 
+
 volumes:
-  pg_data:
+  pg-master-vol:
+  pg-slave-vol:

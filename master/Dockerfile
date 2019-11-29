@@ -1,4 +1,4 @@
-FROM arm32v7/postgres:12-alpine
+FROM arm32v7/postgres:11-alpine
 
 MAINTAINER Lucas Ferreira da Silva <lferreira@inf.ufsm.br>
 
