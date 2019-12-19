@@ -1,0 +1,24 @@
+-[ RECORD 1 ]----+------------------------------
+pid              | 63
+usesysid         | 16385
+usename          | rep
+application_name | walreceiver
+client_addr      | 10.0.2.98
+client_hostname  | 
+client_port      | 35994
+backend_start    | 2019-11-29 19:58:32.323968+00
+backend_xmin     | 
+state            | streaming
+sent_lsn         | 0/7000140
+write_lsn        | 0/7000140
+flush_lsn        | 0/7000140
+replay_lsn       | 0/7000140
+write_lag        | 
+flush_lag        | 
+replay_lag       | 
+sync_priority    | 0
+sync_state       | async
+-[ RECORD 2 ]----+------------------------------
+pid              | 89
+usesysid         | 16385
+--More-- 

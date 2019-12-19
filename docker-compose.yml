@@ -2,8 +2,6 @@ version: "3.3"
 services:
   pg_master:
     image: lucasfs/pg-pi_master
-    volumes:
-      - pg_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -11,9 +9,9 @@ services:
       - PG_REP_USER=rep
       - PG_REP_PASSWORD=postgres
     volumes:
-      - pg-master-vol:/pgdata
+      - /mnt/storage/pgdata:/var/lib/postgresql/data
     ports:
-      - "5432"
+      - "5432:5432"
     networks:
       - pg-net
     deploy:
@@ -31,9 +29,9 @@ services:
       - PG_REP_PASSWORD=postgres
       - PG_MASTER_HOST=pg_master
     volumes:
-      - pg-slave-vol:/pgdata
+      - /mnt/storage/pgdata:/var/lib/postgresql/data
     ports:
-      - "5432"
+      - "5433:5432"
     networks:
       - pg-net
     
@@ -47,6 +45,3 @@ networks:
     external:
       name: pgnet 
 
-volumes:
-  pg-master-vol:
-  pg-slave-vol:
