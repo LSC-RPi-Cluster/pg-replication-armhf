@@ -11,7 +11,7 @@ cat >> ${PGDATA}/postgresql.conf <<EOF
 wal_level = hot_standby
 archive_mode = on
 archive_command = 'cd .'
-max_wal_senders = 8
-wal_keep_segments = 8
+max_wal_senders = 20
+wal_keep_segments = 128
 hot_standby = on
 EOF
